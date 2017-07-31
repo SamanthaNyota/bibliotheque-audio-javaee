@@ -5,8 +5,10 @@ import java.util.List;
 
 import javax.ejb.EJB;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -20,22 +22,7 @@ import fr.sopra.pox3.entities.MaisonDeDisque;
 public class MaisonDeDisqueWebService
 {
 	@EJB
-	MaisonDeDisqueDAO maisonDeDisqueDAO;
-
-	@POST
-	@Consumes( MediaType.APPLICATION_JSON )
-	@Produces( MediaType.APPLICATION_JSON )
-	public MaisonDeDisqueDTO create( MaisonDeDisqueDTO maison )
-	{
-		MaisonDeDisque maisonEntity = new MaisonDeDisque();
-		maisonEntity.setNom( maison.getNom() );
-
-		maisonDeDisqueDAO.add( maisonEntity );
-
-		maison.setId( maisonEntity.getId() );
-
-		return maison;
-	}
+	private MaisonDeDisqueDAO maisonDeDisqueDAO;
 
 	@GET
 	@Path( "/{id}" )
@@ -63,6 +50,42 @@ public class MaisonDeDisqueWebService
 			dtos.add( dtoFromEntity( maison ) );
 
 		return dtos;
+	}
+
+	@POST
+	@Consumes( MediaType.APPLICATION_JSON )
+	@Produces( MediaType.APPLICATION_JSON )
+	public MaisonDeDisqueDTO create( MaisonDeDisqueDTO maison )
+	{
+		MaisonDeDisque maisonEntity = new MaisonDeDisque();
+		maisonEntity.setNom( maison.getNom() );
+
+		maisonDeDisqueDAO.add( maisonEntity );
+
+		maison.setId( maisonEntity.getId() );
+
+		return maison;
+	}
+
+	@PUT
+	@Consumes( MediaType.APPLICATION_JSON )
+	@Produces( MediaType.APPLICATION_JSON )
+	public MaisonDeDisqueDTO update( MaisonDeDisqueDTO maison )
+	{
+		MaisonDeDisque maisonEntity = new MaisonDeDisque();
+		maisonEntity.setId( maison.getId() );
+		maisonEntity.setNom( maison.getNom() );
+
+		maisonDeDisqueDAO.update( maisonEntity );
+
+		return maison;
+	}
+
+	@DELETE
+	@Path( "/{id}" )
+	public void delete( @PathParam( "id" ) int id )
+	{
+		maisonDeDisqueDAO.deleteById( id );
 	}
 
 	private MaisonDeDisqueDTO dtoFromEntity( MaisonDeDisque maison )
