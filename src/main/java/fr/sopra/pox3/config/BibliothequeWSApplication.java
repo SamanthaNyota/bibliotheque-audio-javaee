@@ -1,4 +1,4 @@
-package fr.sopra.pox3;
+package fr.sopra.pox3.config;
 
 import java.util.HashSet;
 import java.util.Set;
