@@ -10,6 +10,8 @@
 
         var ancienneDivSelectionne = null
 
+        // Effectue une requête AJAX vers le serveur
+        // et retourne le JSON retourné par le serveur.
         function requete(method, url, data, fonctionDeRappel) {
             if (typeof data == "function") {
                 fonctionDeRappel = data

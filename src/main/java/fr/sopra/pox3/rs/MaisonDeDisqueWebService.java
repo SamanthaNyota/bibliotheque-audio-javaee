@@ -68,10 +68,14 @@ public class MaisonDeDisqueWebService
 	}
 
 	@PUT
+	@Path( "/{id}" )
 	@Consumes( MediaType.APPLICATION_JSON )
 	@Produces( MediaType.APPLICATION_JSON )
-	public MaisonDeDisqueDTO update( MaisonDeDisqueDTO maison )
+	public MaisonDeDisqueDTO update( @PathParam( "id" ) int id, MaisonDeDisqueDTO maison )
 	{
+		if( id != maison.getId() )
+			throw new RuntimeException( "weird" );
+
 		MaisonDeDisque maisonEntity = new MaisonDeDisque();
 		maisonEntity.setId( maison.getId() );
 		maisonEntity.setNom( maison.getNom() );
