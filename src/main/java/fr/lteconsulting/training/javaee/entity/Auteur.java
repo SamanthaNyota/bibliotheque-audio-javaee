@@ -1,23 +1,20 @@
-package fr.sopra.pox3.entities;
-
-import java.util.ArrayList;
-import java.util.List;
+package fr.lteconsulting.training.javaee.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToOne;
 
 @Entity
-public class MaisonDeDisque
+public class Auteur
 {
 	@Id
-	@GeneratedValue( strategy = GenerationType.IDENTITY )
+	@GeneratedValue( strategy = GenerationType.TABLE )
 	private int id;
 
-	@OneToMany( mappedBy = "maison" )
-	private List<Auteur> auteurs = new ArrayList<>();
+	@ManyToOne
+	private MaisonDeDisque maison;
 
 	private String nom;
 
@@ -41,13 +38,13 @@ public class MaisonDeDisque
 		this.nom = nom;
 	}
 
-	public List<Auteur> getAuteurs()
+	public MaisonDeDisque getMaison()
 	{
-		return auteurs;
+		return maison;
 	}
 
-	public void addAuteur( Auteur auteur )
+	public void setMaison( MaisonDeDisque maison )
 	{
-		auteurs.add( auteur );
+		this.maison = maison;
 	}
 }

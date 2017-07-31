@@ -1,4 +1,4 @@
-package fr.sopra.pox3.ejb;
+package fr.lteconsulting.training.javaee.ejb;
 
 import java.util.List;
 
@@ -7,7 +7,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
-import fr.sopra.pox3.entities.Auteur;
+import fr.lteconsulting.training.javaee.entity.Auteur;
 
 @Stateless
 public class AuteurDAO
@@ -22,7 +22,7 @@ public class AuteurDAO
 
 	public List<Auteur> findAll()
 	{
-		TypedQuery<Auteur> query = em.createQuery( "from fr.sopra.pox3.entities.Auteur a", Auteur.class );
+		TypedQuery<Auteur> query = em.createQuery( "from Auteur a", Auteur.class );
 		return query.getResultList();
 	}
 

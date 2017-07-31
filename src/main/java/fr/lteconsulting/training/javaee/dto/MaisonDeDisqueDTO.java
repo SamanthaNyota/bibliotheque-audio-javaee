@@ -1,4 +1,4 @@
-package fr.sopra.pox3.dto;
+package fr.lteconsulting.training.javaee.dto;
 
 public class MaisonDeDisqueDTO
 {

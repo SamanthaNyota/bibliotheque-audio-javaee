@@ -1,4 +1,4 @@
-package fr.sopra.pox3.rs;
+package fr.lteconsulting.training.javaee.webservice;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,9 +14,9 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import fr.sopra.pox3.dto.MaisonDeDisqueDTO;
-import fr.sopra.pox3.ejb.MaisonDeDisqueDAO;
-import fr.sopra.pox3.entities.MaisonDeDisque;
+import fr.lteconsulting.training.javaee.dto.MaisonDeDisqueDTO;
+import fr.lteconsulting.training.javaee.ejb.MaisonDeDisqueDAO;
+import fr.lteconsulting.training.javaee.entity.MaisonDeDisque;
 
 @Path( "/maisons" )
 public class MaisonDeDisqueWebService

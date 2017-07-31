@@ -1,4 +1,4 @@
-package fr.sopra.pox3.config;
+package fr.lteconsulting.training.javaee.config;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -6,7 +6,7 @@ import java.util.Set;
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
 
-import fr.sopra.pox3.rs.MaisonDeDisqueWebService;
+import fr.lteconsulting.training.javaee.webservice.MaisonDeDisqueWebService;
 
 @ApplicationPath( "/api" )
 public class BibliothequeWSApplication extends Application
