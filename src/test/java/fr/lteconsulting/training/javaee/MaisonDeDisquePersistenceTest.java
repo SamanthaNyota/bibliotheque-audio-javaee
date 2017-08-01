@@ -44,8 +44,8 @@ public class MaisonDeDisquePersistenceTest
 	public void preparePersistenceTest() throws Exception
 	{
 		startTransaction();
-		clearData();
-		insertData();
+		System.out.println( "Deleting old records" );
+		em.createQuery( "delete from MaisonDeDisque" ).executeUpdate();
 		utx.commit();
 
 		em.clear();
@@ -62,27 +62,17 @@ public class MaisonDeDisquePersistenceTest
 	@Test
 	public void shouldFindAllGamesUsingJpqlQuery() throws Exception
 	{
+		System.out.println( "Inserting record" );
+		MaisonDeDisque maison = new MaisonDeDisque();
+		maison.setNom( "TotoRecords" );
+		em.persist( maison );
+
 		System.out.println( "Selecting (using JPQL)..." );
 		List<MaisonDeDisque> maisons = em.createQuery( "from MaisonDeDisque m", MaisonDeDisque.class ).getResultList();
 
 		System.out.println( "Found " + maisons.size() + " maisons" );
 		Assert.assertEquals( 1, maisons.size() );
-	}
-
-	private void clearData() throws Exception
-	{
-		System.out.println( "Deleting old records" );
-		
-		em.createQuery( "delete from MaisonDeDisque" ).executeUpdate();
-	}
-
-	private void insertData() throws Exception
-	{
-		System.out.println( "Inserting record" );
-		
-		MaisonDeDisque maison = new MaisonDeDisque();
-		maison.setNom( "TotoRecords" );
-		em.persist( maison );
+		Assert.assertEquals( "TotoRecords", maisons.get( 0 ).getNom() );
 	}
 
 	private void startTransaction() throws Exception
