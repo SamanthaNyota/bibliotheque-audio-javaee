@@ -25,16 +25,7 @@ Autre exemple de code d'une méthode de test :
 	// Note : pour que cette ligne fonctionne il faut implémenter les méthodes `equals()` et `hashCode()` sur la classe `MaisonDeDisque`.
 	Assert.assertEquals("Le DAO n'a pas enregistré correctement l'entité", maison, dao.findById(maison.getId()));
 
-### 3. Utiliser une DS vers MySQL
-
-La DS utilisée par le contexte de persistence (de test) dans le projet tel qu'il est est nommée `ExempleDS`. Il s'agit d'une DS de démonstration 
-présente dans l'archive de WildFly. Cette DS utilise une base de données H2, qui n'est donc pas **iso-prod**.
-
-Changer le projet afin d'utiliser une DS que vous créez, qui s'appellera `BibliothequeTestDS`. La DS est à injecter dans le Wildfly téléchargé et déployé par Arquillian.
-
-Suivez (et adaptez) les instructions données [ici](http://arquillian.org/guides/testing_java_persistence/#run_the_test_on_jboss_as_7).
-
-### 4. Utilisation d'un service REST externe pour alimenter notre base de Disques
+### 3. Utilisation d'un service REST externe pour alimenter notre base de Disques
 
 Il est maintenant l'heure de compléter le projet pour avoir les DAO manquants (`DisqueDAO` et `ChansonDAO`).
 
@@ -52,3 +43,15 @@ Testez le client.
 
 Maintenant essayez d'intégrer ce client avec votre projet. L'idée est d'avoir la possibilité d'alimenter notre base de données avec les données de `Discogs`.
 
+### 4. Faire une petite UI
+
+Par exemple une petite application Angular 2 qui utilise notre service rest.
+
+### 5. Utiliser une DS vers MySQL
+
+La DS utilisée par le contexte de persistence (de test) dans le projet tel qu'il est est nommée `ExempleDS`. Il s'agit d'une DS de démonstration 
+présente dans l'archive de WildFly. Cette DS utilise une base de données H2, qui n'est donc pas **iso-prod**.
+
+Changer le projet afin d'utiliser une DS que vous créez, qui s'appellera `BibliothequeTestDS`. La DS est à injecter dans le Wildfly téléchargé et déployé par Arquillian.
+
+Suivez (et adaptez) les instructions données [ici](http://arquillian.org/guides/testing_java_persistence/#run_the_test_on_jboss_as_7).
