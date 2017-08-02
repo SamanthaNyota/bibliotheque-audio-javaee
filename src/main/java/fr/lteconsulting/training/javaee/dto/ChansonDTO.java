@@ -6,6 +6,7 @@ public class ChansonDTO
 	private String nom;
 	private int duree;
 	private int auteurId;
+	private int disqueId;
 
 	public int getId()
 	{
@@ -45,5 +46,15 @@ public class ChansonDTO
 	public void setAuteurId( int auteurId )
 	{
 		this.auteurId = auteurId;
+	}
+
+	public int getDisqueId()
+	{
+		return disqueId;
+	}
+
+	public void setDisqueId( int disqueId )
+	{
+		this.disqueId = disqueId;
 	}
 }
