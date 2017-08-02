@@ -41,7 +41,11 @@ public class MaisonDeDisqueDAO
 	public void deleteById( int id )
 	{
 		MaisonDeDisque maison = em.find( MaisonDeDisque.class, id );
-		if( maison != null )
-			em.remove( maison );
+		delete( maison );
+	}
+
+	public void delete( MaisonDeDisque maison )
+	{
+		em.remove( maison );
 	}
 }
