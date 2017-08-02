@@ -14,23 +14,23 @@ import javax.persistence.OneToMany;
 public class Auteur
 {
 	@Id
-	@GeneratedValue( strategy = GenerationType.TABLE )
-	private int id;
+	@GeneratedValue( strategy = GenerationType.IDENTITY )
+	private Integer id;
 
 	@ManyToOne
 	private MaisonDeDisque maison;
 
 	@OneToMany( mappedBy = "auteur" )
-	List<Chanson> chansons = new ArrayList<>();
+	private List<Chanson> chansons = new ArrayList<>();
 
 	private String nom;
 
-	public int getId()
+	public Integer getId()
 	{
 		return id;
 	}
 
-	public void setId( int id )
+	public void setId( Integer id )
 	{
 		this.id = id;
 	}
@@ -53,5 +53,15 @@ public class Auteur
 	public void setMaison( MaisonDeDisque maison )
 	{
 		this.maison = maison;
+	}
+
+	public List<Chanson> getChansons()
+	{
+		return chansons;
+	}
+
+	public void setChansons( List<Chanson> chansons )
+	{
+		this.chansons = chansons;
 	}
 }

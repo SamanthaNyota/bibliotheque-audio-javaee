@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
@@ -12,20 +13,20 @@ import javax.persistence.OneToMany;
 public class Disque
 {
 	@Id
-	@GeneratedValue
-	private int id;
+	@GeneratedValue( strategy = GenerationType.IDENTITY )
+	private Integer id;
 
 	@OneToMany( mappedBy = "disque" )
 	List<Chanson> chansons = new ArrayList<>();
 
 	private String nom;
 
-	public int getId()
+	public Integer getId()
 	{
 		return id;
 	}
 
-	public void setId( int id )
+	public void setId( Integer id )
 	{
 		this.id = id;
 	}

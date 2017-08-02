@@ -5,7 +5,6 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
 
 import fr.lteconsulting.training.javaee.entity.Chanson;
 
@@ -22,8 +21,7 @@ public class ChansonDAO
 
 	public List<Chanson> findAll()
 	{
-		TypedQuery<Chanson> query = em.createQuery( "from Chanson c", Chanson.class );
-		return query.getResultList();
+		return em.createQuery( "from Chanson c", Chanson.class ).getResultList();
 	}
 
 	public void ajouter( Chanson chanson )

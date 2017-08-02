@@ -16,6 +16,7 @@ import javax.ws.rs.core.MediaType;
 
 import fr.lteconsulting.training.javaee.dto.AuteurDTO;
 import fr.lteconsulting.training.javaee.ejb.AuteurDAO;
+import fr.lteconsulting.training.javaee.ejb.MaisonDeDisqueDAO;
 import fr.lteconsulting.training.javaee.entity.Auteur;
 
 @Path( "/auteurs" )
@@ -23,6 +24,9 @@ public class AuteurWebService
 {
 	@EJB
 	private AuteurDAO auteurDAO;
+
+	@EJB
+	private MaisonDeDisqueDAO maisonDeDisqueDAO;
 
 	@GET
 	@Path( "/{id}" )
@@ -59,6 +63,9 @@ public class AuteurWebService
 	{
 		Auteur entity = new Auteur();
 		entity.setNom( auteur.getNom() );
+		
+		if( auteur.getMaisonDeDisqueId() > 0 )
+			entity.setMaison( maisonDeDisqueDAO.findById( auteur.getMaisonDeDisqueId() ) );
 
 		auteurDAO.ajouter( entity );
 

@@ -15,7 +15,9 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import fr.lteconsulting.training.javaee.dto.ChansonDTO;
+import fr.lteconsulting.training.javaee.ejb.AuteurDAO;
 import fr.lteconsulting.training.javaee.ejb.ChansonDAO;
+import fr.lteconsulting.training.javaee.ejb.DisqueDAO;
 import fr.lteconsulting.training.javaee.entity.Chanson;
 
 @Path( "/chansons" )
@@ -23,6 +25,12 @@ public class ChansonWebService
 {
 	@EJB
 	private ChansonDAO chansonDAO;
+
+	@EJB
+	private AuteurDAO auteurDAO;
+
+	@EJB
+	private DisqueDAO disqueDAO;
 
 	@GET
 	@Path( "/{id}" )
@@ -59,6 +67,11 @@ public class ChansonWebService
 	{
 		Chanson entity = new Chanson();
 		entity.setNom( chanson.getNom() );
+		entity.setDuree( chanson.getDuree() );
+		if( chanson.getAuteurId() > 0 )
+			entity.setAuteur( auteurDAO.findById( chanson.getAuteurId() ) );
+		if( chanson.getDisqueId() > 0 )
+			entity.setDisque( disqueDAO.findById( chanson.getDisqueId() ) );
 
 		chansonDAO.ajouter( entity );
 

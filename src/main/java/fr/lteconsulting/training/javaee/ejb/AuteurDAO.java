@@ -5,7 +5,6 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
 
 import fr.lteconsulting.training.javaee.entity.Auteur;
 
@@ -22,8 +21,7 @@ public class AuteurDAO
 
 	public List<Auteur> findAll()
 	{
-		TypedQuery<Auteur> query = em.createQuery( "from Auteur a", Auteur.class );
-		return query.getResultList();
+		return em.createQuery( "from Auteur a", Auteur.class ).getResultList();
 	}
 
 	public void ajouter( Auteur auteur )

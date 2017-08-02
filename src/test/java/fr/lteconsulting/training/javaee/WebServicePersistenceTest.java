@@ -3,6 +3,8 @@ package fr.lteconsulting.training.javaee;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
+import java.util.List;
+
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -25,6 +27,8 @@ import fr.lteconsulting.training.javaee.dto.DisqueDTO;
 import fr.lteconsulting.training.javaee.dto.MaisonDeDisqueDTO;
 import fr.lteconsulting.training.javaee.ejb.MaisonDeDisqueDAO;
 import fr.lteconsulting.training.javaee.entity.Auteur;
+import fr.lteconsulting.training.javaee.entity.Chanson;
+import fr.lteconsulting.training.javaee.entity.Disque;
 import fr.lteconsulting.training.javaee.entity.MaisonDeDisque;
 import fr.lteconsulting.training.javaee.webservice.AuteurWebService;
 import fr.lteconsulting.training.javaee.webservice.ChansonWebService;
@@ -32,12 +36,11 @@ import fr.lteconsulting.training.javaee.webservice.DisqueWebService;
 import fr.lteconsulting.training.javaee.webservice.MaisonDeDisqueWebService;
 
 @RunWith( Arquillian.class )
-public class MiscellanousPersistenceTest
+public class WebServicePersistenceTest
 {
 	@Deployment
 	public static Archive<?> createDeployment()
 	{
-		// TODO Ajouter la data source pour les tests et l'utiliser à la place de ExempleDS dans le fichier persistence.xml
 		return ShrinkWrap.create( WebArchive.class, "test.war" )
 				.addPackage( MaisonDeDisque.class.getPackage() )
 				.addPackage( MaisonDeDisqueDAO.class.getPackage() )
@@ -69,16 +72,14 @@ public class MiscellanousPersistenceTest
 	public void preparePersistenceTest() throws Exception
 	{
 		startTransaction();
+
 		System.out.println( "Deleting old records" );
 		em.createQuery( "delete from Chanson" ).executeUpdate();
 		em.createQuery( "delete from Disque" ).executeUpdate();
 		em.createQuery( "delete from Auteur" ).executeUpdate();
 		em.createQuery( "delete from MaisonDeDisque" ).executeUpdate();
-		utx.commit();
 
-		em.clear();
-
-		startTransaction();
+		restartTransaction();
 	}
 
 	@After
@@ -110,16 +111,40 @@ public class MiscellanousPersistenceTest
 		chansonDto.setDisqueId( disqueDto.getId() );
 		chansonDto = chansonWebService.create( chansonDto );
 
+		restartTransaction();
+
 		MaisonDeDisque maison = em.find( MaisonDeDisque.class, maisonDto.getId() );
 
 		assertNotNull( maison );
-		assertEquals( "MAISON", maison.getNom() );
-		assertEquals( 1, maison.getAuteurs().size() );
+		assertEquals( maisonDto.getNom(), maison.getNom() );
 
-		Auteur auteur = maison.getAuteurs().get( 0 );
+		List<Auteur> auteurs = maison.getAuteurs();
+		assertEquals( 1, auteurs.size() );
+
+		Auteur auteur = auteurs.get( 0 );
 		assertNotNull( auteur );
-		assertEquals( auteurDto.getId(), auteur.getId() );
-		assertEquals( "AUTEUR", auteur.getNom() );
+		assertEquals( auteurDto.getId(), (int) auteur.getId() );
+		assertEquals( auteurDto.getNom(), auteur.getNom() );
+
+		List<Chanson> chansons = auteur.getChansons();
+		assertEquals( 1, chansons.size() );
+
+		Chanson chanson = chansons.get( 0 );
+		assertEquals( chansonDto.getNom(), chanson.getNom() );
+		assertEquals( chansonDto.getDuree(), chanson.getDuree() );
+		assertEquals( chansonDto.getId(), (int) chanson.getId() );
+
+		Disque disque = chanson.getDisque();
+		assertEquals( 1, disque.getChansons().size() );
+		assertEquals( disqueDto.getId(), (int) disque.getId() );
+		assertEquals( disqueDto.getNom(), disque.getNom() );
+	}
+
+	private void restartTransaction() throws Exception
+	{
+		utx.commit();
+		em.clear();
+		startTransaction();
 	}
 
 	private void startTransaction() throws Exception

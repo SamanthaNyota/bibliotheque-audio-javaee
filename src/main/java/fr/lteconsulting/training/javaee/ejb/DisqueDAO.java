@@ -22,8 +22,7 @@ public class DisqueDAO
 
 	public List<Disque> findAll()
 	{
-		TypedQuery<Disque> query = em.createQuery( "from Disque d", Disque.class );
-		return query.getResultList();
+		return em.createQuery( "from Disque d", Disque.class ).getResultList();
 	}
 
 	public void ajouter( Disque disque )
