@@ -5,22 +5,17 @@ import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 @Entity
-public class Auteur
+public class Disque
 {
 	@Id
-	@GeneratedValue( strategy = GenerationType.TABLE )
+	@GeneratedValue
 	private int id;
 
-	@ManyToOne
-	private MaisonDeDisque maison;
-
-	@OneToMany( mappedBy = "auteur" )
+	@OneToMany( mappedBy = "disque" )
 	List<Chanson> chansons = new ArrayList<>();
 
 	private String nom;
@@ -35,6 +30,16 @@ public class Auteur
 		this.id = id;
 	}
 
+	public List<Chanson> getChansons()
+	{
+		return chansons;
+	}
+
+	public void setChansons( List<Chanson> chansons )
+	{
+		this.chansons = chansons;
+	}
+
 	public String getNom()
 	{
 		return nom;
@@ -43,15 +48,5 @@ public class Auteur
 	public void setNom( String nom )
 	{
 		this.nom = nom;
-	}
-
-	public MaisonDeDisque getMaison()
-	{
-		return maison;
-	}
-
-	public void setMaison( MaisonDeDisque maison )
-	{
-		this.maison = maison;
 	}
 }

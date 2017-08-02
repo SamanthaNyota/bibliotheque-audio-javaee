@@ -1,29 +1,26 @@
 package fr.lteconsulting.training.javaee.entity;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 
 @Entity
-public class Auteur
+public class Chanson
 {
 	@Id
-	@GeneratedValue( strategy = GenerationType.TABLE )
+	@GeneratedValue
 	private int id;
 
 	@ManyToOne
-	private MaisonDeDisque maison;
+	private Disque disque;
 
-	@OneToMany( mappedBy = "auteur" )
-	List<Chanson> chansons = new ArrayList<>();
+	@ManyToOne
+	private Auteur auteur;
 
 	private String nom;
+
+	private int duree;
 
 	public int getId()
 	{
@@ -33,6 +30,26 @@ public class Auteur
 	public void setId( int id )
 	{
 		this.id = id;
+	}
+
+	public Disque getDisque()
+	{
+		return disque;
+	}
+
+	public void setDisque( Disque disque )
+	{
+		this.disque = disque;
+	}
+
+	public Auteur getAuteur()
+	{
+		return auteur;
+	}
+
+	public void setAuteur( Auteur auteur )
+	{
+		this.auteur = auteur;
 	}
 
 	public String getNom()
@@ -45,13 +62,13 @@ public class Auteur
 		this.nom = nom;
 	}
 
-	public MaisonDeDisque getMaison()
+	public int getDuree()
 	{
-		return maison;
+		return duree;
 	}
 
-	public void setMaison( MaisonDeDisque maison )
+	public void setDuree( int duree )
 	{
-		this.maison = maison;
+		this.duree = duree;
 	}
 }
