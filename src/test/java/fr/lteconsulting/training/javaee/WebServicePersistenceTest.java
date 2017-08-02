@@ -79,7 +79,7 @@ public class WebServicePersistenceTest
 		em.createQuery( "delete from Auteur" ).executeUpdate();
 		em.createQuery( "delete from MaisonDeDisque" ).executeUpdate();
 
-		restartTransaction();
+		validateAndRestartTransaction();
 	}
 
 	@After
@@ -89,7 +89,7 @@ public class WebServicePersistenceTest
 	}
 
 	@Test
-	public void shouldFindAllGamesUsingJpqlQuery() throws Exception
+	public void verifyEntityGraphAfterCreateByWebService() throws Exception
 	{
 		MaisonDeDisqueDTO maisonDto = new MaisonDeDisqueDTO();
 		maisonDto.setNom( "MAISON" );
@@ -111,7 +111,7 @@ public class WebServicePersistenceTest
 		chansonDto.setDisqueId( disqueDto.getId() );
 		chansonDto = chansonWebService.create( chansonDto );
 
-		restartTransaction();
+		validateAndRestartTransaction();
 
 		MaisonDeDisque maison = em.find( MaisonDeDisque.class, maisonDto.getId() );
 
@@ -140,7 +140,7 @@ public class WebServicePersistenceTest
 		assertEquals( disqueDto.getNom(), disque.getNom() );
 	}
 
-	private void restartTransaction() throws Exception
+	private void validateAndRestartTransaction() throws Exception
 	{
 		utx.commit();
 		em.clear();
