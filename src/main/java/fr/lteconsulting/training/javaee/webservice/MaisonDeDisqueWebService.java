@@ -74,7 +74,7 @@ public class MaisonDeDisqueWebService
 	public MaisonDeDisqueDTO update( @PathParam( "id" ) int id, MaisonDeDisqueDTO maison )
 	{
 		if( id != maison.getId() )
-			throw new RuntimeException( "weird" );
+			throw new IllegalArgumentException();
 
 		MaisonDeDisque maisonEntity = new MaisonDeDisque();
 		maisonEntity.setId( maison.getId() );
