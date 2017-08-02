@@ -43,6 +43,30 @@ Testez le client.
 
 Maintenant essayez d'intégrer ce client avec votre projet. L'idée est d'avoir la possibilité d'alimenter notre base de données avec les données de `Discogs`.
 
+#### Mode d'emploi de Discogs
+
+Créer un compte avec la page https://www.discogs.com/fr/users/create
+
+Aller dans les developper settings ici : https://www.discogs.com/fr/settings/developers
+
+Cliquer sur "Créer une application"
+
+Remplir le nom, la description, et cliquer sur le bouton pour valider.
+
+Bien mémoriser les données sur cette page (ConsumerKey, ConsumerSecret, ...)
+
+**ATTENTION NE PAS METTRE LE CONSUMER SECRET SUR GITHUB, C'EST VOTRE CLEF PRIVEE**
+
+A partir de la chacune de vos requêtes doivent inclure deux paramètres supplémentaire :
+
+- `key` : à valoriser avec votre *ConsumerKey*,
+- `secret` à vaoriser avec votre *ConsumerSecret*.
+
+Ensuite cette requête doit fonctionner (elle cherche les artistes nommés "Toto") :
+
+`https://api.discogs.com/database/search?q=Toto&type=artist&key=VOTRE_KEY&secret=VOTRE_SECRET`
+
+
 ### 4. Faire une petite UI
 
 Par exemple une petite application Angular 2 qui utilise notre service rest.
