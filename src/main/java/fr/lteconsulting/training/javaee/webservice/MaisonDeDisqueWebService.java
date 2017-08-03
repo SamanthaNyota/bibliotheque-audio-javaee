@@ -60,7 +60,7 @@ public class MaisonDeDisqueWebService
 		MaisonDeDisque maisonEntity = new MaisonDeDisque();
 		maisonEntity.setNom( maison.getNom() );
 
-		maisonDeDisqueDAO.add( maisonEntity );
+		maisonDeDisqueDAO.ajouter( maisonEntity );
 
 		maison.setId( maisonEntity.getId() );
 
