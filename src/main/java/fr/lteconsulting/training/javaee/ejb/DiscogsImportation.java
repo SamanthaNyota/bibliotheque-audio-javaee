@@ -1,6 +1,7 @@
 package fr.lteconsulting.training.javaee.ejb;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -26,6 +27,8 @@ import fr.lteconsulting.training.javaee.entity.Disque;
 @Stateless
 public class DiscogsImportation
 {
+	private Logger log = Logger.getLogger( DiscogsImportation.class.getSimpleName() );
+
 	@EJB
 	private AuteurDAO auteurDao;
 
@@ -50,7 +53,7 @@ public class DiscogsImportation
 	public List<DiscogsArtist> searchArtists( String searchTerm )
 	{
 		DiscogsArtistSearchResponse response = discogsService.searchArtist( searchTerm, "artist", DiscogsWebService.KEY, DiscogsWebService.SECRET, DiscogsSecrets.userAgent() );
-		System.out.println( "SEARCH ARTISTS : " + response );
+		log.info( "SEARCH ARTISTS : " + response );
 
 		if( response == null )
 			return null;
@@ -68,14 +71,14 @@ public class DiscogsImportation
 			// en ajoutant une colonne 'discogsArtistId' contenant l'id Discogs dans la table auteur
 
 			DiscogsArtistResponse artistResponse = discogsService.getArtist( id, DiscogsSecrets.userAgent() );
-			System.out.println( "Found artist details : " + artistResponse );
+			log.info( "Found artist details : " + artistResponse );
 
 			auteur = new Auteur();
 			auteur.setNom( artistResponse.getName() );
 			auteurDao.ajouter( auteur );
 
 			DiscogsArtistReleasesResponse artistsReleasesResponse = discogsService.getArtistReleases( id, DiscogsSecrets.userAgent() );
-			System.out.println( "Found artist releases details : " + artistsReleasesResponse );
+			log.info( "Found artist releases details : " + artistsReleasesResponse );
 
 			if( artistsReleasesResponse != null && artistsReleasesResponse.getReleases() != null )
 			{
@@ -91,9 +94,10 @@ public class DiscogsImportation
 					{
 						for( DiscogsTrack track : releaseResponse.getTracklist() )
 						{
-							System.out.println( "Found track " + track );
+							log.info( "Found track " + track );
 
 							// TODO etre sur d'insérer les chansons dans l'ordre
+							// Collections.sort(...) et implémenter un Comparator
 
 							Chanson chanson = new Chanson();
 							chanson.setDisque( disque );
@@ -107,8 +111,7 @@ public class DiscogsImportation
 		}
 		catch( Exception e )
 		{
-			System.out.println( "Error when calling Discogs" );
-			e.printStackTrace();
+			log.warning( "Error when calling Discogs when importing artist " + id );
 		}
 
 		// TODO On ne se préoccupe pas de savoir si toutes les infos (disque+chansons) ont été importées.
