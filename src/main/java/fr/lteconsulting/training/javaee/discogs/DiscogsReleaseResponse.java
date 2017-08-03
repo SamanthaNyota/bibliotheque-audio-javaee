@@ -1,12 +1,15 @@
 package fr.lteconsulting.training.javaee.discogs;
 
+import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties( ignoreUnknown = true )
-public class DiscogsArtist
+public class DiscogsReleaseResponse
 {
 	private int id;
 	private String title;
+	private List<DiscogsTrack> tracklist;
 
 	public int getId()
 	{
@@ -28,9 +31,19 @@ public class DiscogsArtist
 		this.title = title;
 	}
 
+	public List<DiscogsTrack> getTracklist()
+	{
+		return tracklist;
+	}
+
+	public void setTracklist( List<DiscogsTrack> tracklist )
+	{
+		this.tracklist = tracklist;
+	}
+
 	@Override
 	public String toString()
 	{
-		return "DiscogsArtist [id=" + id + ", title=" + title + "]";
+		return "DiscogsReleaseResponse [id=" + id + ", title=" + title + ", tracklist=" + tracklist + "]";
 	}
 }
