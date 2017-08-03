@@ -45,7 +45,7 @@ public class DiscogsImportation
 	private void initRestEastClient()
 	{
 		ResteasyClient client = new ResteasyClientBuilder().build();
-		ResteasyWebTarget target = client.target( "https://api.discogs.com" );
+		ResteasyWebTarget target = client.target( DiscogsWebService.URL );
 
 		discogsService = target.proxy( DiscogsWebService.class );
 	}

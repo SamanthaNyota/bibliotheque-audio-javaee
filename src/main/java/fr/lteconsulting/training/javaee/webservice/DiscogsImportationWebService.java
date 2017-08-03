@@ -15,17 +15,21 @@ import fr.lteconsulting.training.javaee.discogs.DiscogsArtist;
 import fr.lteconsulting.training.javaee.dto.ImportedDiscogsArtist;
 import fr.lteconsulting.training.javaee.dto.PossibleDiscogsArtistImport;
 import fr.lteconsulting.training.javaee.ejb.DiscogsImportation;
+import fr.lteconsulting.training.javaee.ejb.DiscogsImportationJob;
 
 @Path( "/discogs" )
 public class DiscogsImportationWebService
 {
 	@EJB
 	private DiscogsImportation importation;
+	
+	@EJB
+	private DiscogsImportationJob importationJob;
 
 	@GET
 	@Path( "/searchArtists" )
 	@Produces( MediaType.APPLICATION_JSON )
-	public List<PossibleDiscogsArtistImport> findById( @QueryParam( "q" ) String searchTerm )
+	public List<PossibleDiscogsArtistImport> searchArtists( @QueryParam( "q" ) String searchTerm )
 	{
 		List<PossibleDiscogsArtistImport> results = new ArrayList<>();
 
@@ -49,5 +53,13 @@ public class DiscogsImportationWebService
 			return null;
 
 		return new ImportedDiscogsArtist( auteurId, id );
+	}
+
+	@GET
+	@Path( "/importArtistAsync" )
+	@Produces( MediaType.APPLICATION_JSON )
+	public void importArtistAsync( @QueryParam( "discogsArtistId" ) int id )
+	{
+		importationJob.registerArtistImportationJob( id );
 	}
 }
