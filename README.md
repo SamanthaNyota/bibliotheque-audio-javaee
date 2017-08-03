@@ -66,12 +66,40 @@ Ensuite cette requête doit fonctionner (elle cherche les artistes nommés "Toto
 
 `https://api.discogs.com/database/search?q=Toto&type=artist&key=VOTRE_KEY&secret=VOTRE_SECRET`
 
+### 4. Importation des données de Discogs
 
-### 4. Faire une petite UI
+Une fois testé l'importation depuis Discogs, nous allons rendre cette fonctionnalité accessible à nos utilisateurs.
+
+Fournissez un Web Service supplémentaire, lié à l'adresse '/api/discogs'.
+
+Pour ceci, créez une classe `@Path("/discogs") public class DiscogsImportationWebService`.
+
+Cette classe aura deux méthodes, dont l'exécution est déclenché par la réception d'une requête HTTP (que pour l'instant vous initierez à partir du navigateur ou de post man). Plus tard, ce WebService sera utilisé par la partie Interface Graphique de notre application.
+
+Ce WebService devra répondre aux requetes suivantes :
+
+- `http://localhost:8080/bibliotheque-audio-javaee/api/discogs/searchArtists?q=NOM_ARTISTE`
+- `http://localhost:8080/bibliotheque-audio-javaee/api/discogs/importArtist?discogArtistId=ID_ARTISTE_CHEZ_DISCOGS`
+
+#### Première requête
+
+Lorsque l'utilisateur envoie une reuête `http://localhost:8080/bibliotheque-audio-javaee/api/discogs/searchArtists?q=NOM_ARTISTE`, notre serveur devra renvoyer (en JSON) la liste des couples { "discogs_id": identifiantDiscogs, "nom_artiste": nomDeLArtiste}.
+
+Ceci permettra à l'utilisateur de demander la liste des artistes qu'il peut importer en fonction de ceux disponibles chez Discogs.
+
+#### Deuxieme requête
+
+La deuxieme requête déclenche réellement l'importation d'un artiste. Dans l'implémentation de cette méthode, il vous faudra appeler le WS Discogs et importer l'artiste, ses disques ainsi que les chansons s'y trouvant.
+
+#### Validation
+
+Lancer le serveur Wildfly avec votre application déployée, et vérifier que le nouveau WS fonctionne correctement. 
+
+### 5. Faire une petite UI
 
 Par exemple une petite application Angular 2 qui utilise notre service rest.
 
-### 5. Utiliser une DS vers MySQL
+### 6. Utiliser une DS vers MySQL
 
 La DS utilisée par le contexte de persistence (de test) dans le projet tel qu'il est est nommée `ExempleDS`. Il s'agit d'une DS de démonstration 
 présente dans l'archive de WildFly. Cette DS utilise une base de données H2, qui n'est donc pas **iso-prod**.
