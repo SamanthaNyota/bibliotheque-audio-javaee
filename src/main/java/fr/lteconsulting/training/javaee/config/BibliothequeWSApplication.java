@@ -8,6 +8,7 @@ import javax.ws.rs.core.Application;
 
 import fr.lteconsulting.training.javaee.webservice.AuteurWebService;
 import fr.lteconsulting.training.javaee.webservice.ChansonWebService;
+import fr.lteconsulting.training.javaee.webservice.DiscogsImportationWebService;
 import fr.lteconsulting.training.javaee.webservice.DisqueWebService;
 import fr.lteconsulting.training.javaee.webservice.MaisonDeDisqueWebService;
 
@@ -22,6 +23,7 @@ public class BibliothequeWSApplication extends Application
 		result.add( DisqueWebService.class );
 		result.add( ChansonWebService.class );
 		result.add( AuteurWebService.class );
+		result.add( DiscogsImportationWebService.class );
 		return result;
 	}
 }
