@@ -29,6 +29,7 @@ public class DiscogsImportationJob
 {
 	private Logger logger = Logger.getLogger( DiscogsImportationJob.class.getSimpleName() );
 
+	private int nbConsecutiveErrors = 0;
 	private List<Integer> toImportArtistsId = new ArrayList<>();
 	private Integer artisteAImporter = null;
 	private Auteur auteurCourant = null;
@@ -94,10 +95,7 @@ public class DiscogsImportationJob
 				{
 					logger.info( "finished to import artist's discs !" );
 
-					// RAZ etat
-					artistsReleasesResponse = null;
-					auteurCourant = null;
-					artisteAImporter = null;
+					raz();
 				}
 				else
 				{
@@ -134,7 +132,24 @@ public class DiscogsImportationJob
 		}
 		catch( Exception e )
 		{
-			logger.warning( "Error when calling Discogs when importing artist " + artisteAImporter );
+			nbConsecutiveErrors++;
+			if( nbConsecutiveErrors > 3 )
+			{
+				logger.warning( "3 times an error, skip this artist " + artisteAImporter );
+				raz();
+			}
+			else
+			{
+				logger.warning( "Error when calling Discogs when importing artist " + artisteAImporter );
+			}
 		}
+	}
+
+	private void raz()
+	{
+		nbConsecutiveErrors = 0;
+		artistsReleasesResponse = null;
+		auteurCourant = null;
+		artisteAImporter = null;
 	}
 }
