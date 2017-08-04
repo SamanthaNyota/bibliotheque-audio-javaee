@@ -7,16 +7,6 @@ import 'rxjs/add/operator/toPromise'
 
 import * as Model from './model'
 
-let mock = {
-    auteurs: [
-        {
-            id: 1,
-            nom: 'Toto',
-            maisonDeDisqueId: 1
-        }
-    ]
-}
-
 @Injectable()
 export class DataService {
     constructor(private http: Http) { }

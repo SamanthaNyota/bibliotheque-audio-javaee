@@ -61,12 +61,12 @@ public class DiscogsImportationJob
 		toImportArtistsId.add( discogsArtistId );
 	}
 
-	@Schedule( second = "*/4", minute = "*", hour = "*" )
+	@Schedule( second = "*/10", minute = "*", hour = "*" )
 	public void work()
 	{
 		try
 		{
-			if( artisteAImporter == null )
+			if( artisteAImporter == null || auteurCourant == null )
 			{
 				if( toImportArtistsId.isEmpty() )
 					return;
@@ -74,9 +74,7 @@ public class DiscogsImportationJob
 				artisteAImporter = toImportArtistsId.remove( 0 );
 
 				logger.info( "Discogs importation time for artist " + artisteAImporter + "!" );
-			}
-			else if( auteurCourant == null )
-			{
+
 				DiscogsArtistResponse artistResponse = discogsService.getArtist( artisteAImporter, DiscogsSecrets.userAgent() );
 				logger.info( "Found artist details : " + artistResponse );
 
@@ -129,6 +127,8 @@ public class DiscogsImportationJob
 					}
 				}
 			}
+
+			nbConsecutiveErrors = 0;
 		}
 		catch( Exception e )
 		{

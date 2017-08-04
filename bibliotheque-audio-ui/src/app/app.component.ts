@@ -28,7 +28,7 @@ export class AppComponent {
     this.auteurs = this.dataService.artists()
 
     this.importableArtists = this.artistSearchTerms
-      .debounceTime(300)
+      .debounceTime(2500)
       .distinctUntilChanged()
       .switchMap(term => term ? this.dataService.searchArtist(term) : Observable.of<Model.PossibleDiscogsArtistImport[]>([]))
       .catch(error => {

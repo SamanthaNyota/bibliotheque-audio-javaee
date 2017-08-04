@@ -23,6 +23,8 @@ import fr.lteconsulting.training.javaee.ejb.AuteurDAO;
 import fr.lteconsulting.training.javaee.ejb.DiscogsImportation;
 import fr.lteconsulting.training.javaee.entity.MaisonDeDisque;
 
+// TODO : il faudrait mocker le service web pour valider les tests
+// ainsi nos tests ne dépendraient pas de la présence et du fonctionnement de Discogs
 @RunWith( Arquillian.class )
 public class DiscogsTest
 {
