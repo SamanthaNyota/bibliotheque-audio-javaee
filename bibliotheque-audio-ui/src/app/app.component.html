@@ -1,16 +1,27 @@
 <h1>Bibliotheque Audio</h1>
 
-<div *ngFor='let auteur of auteurs | async' (click)='selectAuteur(auteur)' [style.border]='(selectedAuteur===auteur)?"1px solid black":"none"'>
-  {{auteur.nom}}
-</div>
+<div class='auteurs container'>
+  <div *ngFor='let auteur of auteurs | async'>
+    <div class='auteur-item' (click)='selectAuteur(auteur)'>{{auteur.nom}}</div>
 
-<div *ngIf='selectedAuteur'>
-  <h2>Disques de l'auteur sélectionné ({{auteur.nom}})</h2>
-  <div *ngFor='let disque of disques | async'>
-    {{disque.nom}} <sup>{{disque.id}}</sup>
-    <ul *ngIf='disque.chansons'>
-      <li *ngFor='let chanson of disque.chansons'>{{chanson.nom}} {{chanson.duree}}</li>
-    </ul>
+    <div class='auteur-disques-list' *ngIf='selectedAuteur===auteur'>
+      <div class='row'>
+        <div>
+          <h2>Disques</h2>
+          <span *ngIf='disques | async'>{{(disques | async).length}} éléments</span>
+        </div>
+        <div class='column' style='overflow:auto;'>
+          <div class='row'>
+            <div class='column column-33' *ngFor='let disque of disques | async'>
+              <span style='font-weight: bold;'>{{disque.nom}}</span> <sup>{{disque.id}}</sup>
+              <ol *ngIf='disque.chansons' style='height:16em; overflow:auto;'>
+                <li *ngFor='let chanson of disque.chansons'>{{chanson.nom}} {{chanson.duree}}</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 
