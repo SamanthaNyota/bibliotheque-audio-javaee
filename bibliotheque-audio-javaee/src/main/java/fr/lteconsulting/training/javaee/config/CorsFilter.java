@@ -28,8 +28,12 @@ public class CorsFilter implements Filter
 
 		String origin = req.getHeader( "Origin" );
 
-		if( origin != null && origin.matches( ALLOWED_DOMAINS_REGEXP ) )
-			resp.addHeader( "Access-Control-Allow-Origin", origin );
+		if (origin != null && origin.matches(ALLOWED_DOMAINS_REGEXP)) {
+			resp.addHeader("Access-Control-Allow-Origin", origin);
+			resp.addHeader("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE");
+			if (req.getHeader("Access-Control-Request-Headers") != null)
+				resp.addHeader("Access-Control-Allow-Headers", req.getHeader("Access-Control-Request-Headers"));
+		}
 
 		if( filterChain != null )
 			filterChain.doFilter( req, resp );
