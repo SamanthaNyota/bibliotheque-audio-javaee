@@ -17,7 +17,7 @@ public abstract class GenericDAO<T>
 	}
 
 	@PersistenceContext( name = "Bibliotheque" )
-	private EntityManager em;
+	protected EntityManager em;
 
 	public T findById( int id )
 	{

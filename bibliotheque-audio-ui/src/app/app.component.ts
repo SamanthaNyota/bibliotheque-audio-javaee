@@ -19,6 +19,7 @@ import * as Model from './model'
 export class AppComponent {
   auteurs: Observable<Model.Auteur[]>
   selectedAuteur: Model.Auteur
+  disques: Observable<Model.Disque[]>
 
   searchArtistToImport: string
   artistSearchTerms = new Subject<string>()
@@ -35,6 +36,11 @@ export class AppComponent {
         console.log(error)
         return Observable.of<Model.PossibleDiscogsArtistImport[]>([]);
       })
+  }
+
+  selectAuteur(auteur: Model.Auteur) {
+    this.selectedAuteur = auteur
+    this.disques = this.dataService.disquesByArtist(auteur.id)
   }
 
   rechercheArtiste(term: string): void {

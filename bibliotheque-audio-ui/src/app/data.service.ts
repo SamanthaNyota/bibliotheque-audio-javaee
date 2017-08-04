@@ -17,6 +17,12 @@ export class DataService {
             .map(response => response.json() as Model.Auteur[])
     }
 
+    disquesByArtist(artistId: number): Observable<Model.Disque[]> {
+        return this.http
+            .get(`http://localhost:8080/bibliotheque-audio-javaee-1.0-SNAPSHOT/api/auteurs/${artistId}/disques`)
+            .map(response => response.json() as Model.Disque[])
+    }
+
     searchArtist(term): Observable<Model.PossibleDiscogsArtistImport[]> {
         return this.http
             .get(`http://localhost:8080/bibliotheque-audio-javaee-1.0-SNAPSHOT/api/discogs/searchArtists?q=${term}`)
