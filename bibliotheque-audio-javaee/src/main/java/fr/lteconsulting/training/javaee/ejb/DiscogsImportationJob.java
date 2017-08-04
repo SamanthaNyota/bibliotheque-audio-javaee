@@ -132,10 +132,12 @@ public class DiscogsImportationJob
 		}
 		catch( Exception e )
 		{
+			int maxErrors = 4;
+
 			nbConsecutiveErrors++;
-			if( nbConsecutiveErrors > 3 )
+			if( nbConsecutiveErrors >= maxErrors )
 			{
-				logger.warning( "3 times an error, skip this artist " + artisteAImporter );
+				logger.warning( maxErrors + " times an error, skip this artist " + artisteAImporter );
 				raz();
 			}
 			else
